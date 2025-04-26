@@ -1,6 +1,6 @@
 CREATE TABLE Bank (
                       userId BINARY(16) PRIMARY KEY,
-                      balance BIGINT DEFAULT 0 CHECK (balance >= 0)
+                      balance DECIMAL(20, 2) DEFAULT 0 CHECK (balance >= 0)
 );
 
 CREATE TABLE DailyRewards (
@@ -13,7 +13,7 @@ CREATE TABLE Player (
                         playerId BINARY(16) PRIMARY KEY,
                         name VARCHAR(255),
                         title VARCHAR(255),
-                        onHandBalance BINARY(16)
+                        onHandBalance DECIMAL(20, 2)
 );
 
 CREATE TABLE TransactionFee (
@@ -25,7 +25,7 @@ CREATE TABLE Transactions (
                               id BIGINT PRIMARY KEY AUTO_INCREMENT,
                               senderUUID BINARY(16),
                               receiverUUID BINARY(16),
-                              amount BIGINT CHECK (amount > 0),
+                              amount DECIMAL(20, 2) CHECK (amount > 0),
                               date DATETIME DEFAULT CURRENT_TIMESTAMP,
                               FOREIGN KEY (senderUUID) REFERENCES Bank(userId),
                               FOREIGN KEY (receiverUUID) REFERENCES Bank(userId)

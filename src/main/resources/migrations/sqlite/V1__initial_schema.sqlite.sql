@@ -1,6 +1,6 @@
 CREATE TABLE Bank (
                       userId BLOB PRIMARY KEY,
-                      balance INTEGER DEFAULT 0 CHECK (balance >= 0)
+                      balance INTEGER DEFAULT 0 CHECK (balance >= 0) -- Usando INTEGER para valores monetários em SQLite
 );
 
 CREATE TABLE DailyRewards (
@@ -13,7 +13,7 @@ CREATE TABLE Player (
                         playerId BLOB PRIMARY KEY,
                         name TEXT,
                         title TEXT,
-                        onHandBalance BLOB
+                        onHandBalance INTEGER
 );
 
 CREATE TABLE TransactionFee (
