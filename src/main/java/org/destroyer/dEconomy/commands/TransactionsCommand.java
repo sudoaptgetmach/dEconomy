@@ -31,7 +31,7 @@ public class TransactionsCommand {
     @CommandPermission("deconomy.transactions")
     public void transactions(BukkitCommandActor sender, @Optional @Named("name") String playerName) throws SQLException {
         if (!sender.isPlayer() && playerName == null) { sender.error(NO_PERMISSION_CONSOLE.get()); return; }
-        if (playerName != null && !sender.asPlayer().hasPermission("deconomy.transactions.seeOther")) { sender.error(NO_PERMISSION.get()); return; }
+        if (playerName != null && !sender.isConsole() && !sender.asPlayer().hasPermission("deconomy.transactions.seeOther")) { sender.error(NO_PERMISSION.get()); return; }
 
         if (playerName != null) {
             OfflinePlayer target = Bukkit.getOfflinePlayer(playerName);
