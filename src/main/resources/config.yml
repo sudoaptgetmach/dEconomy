@@ -1,0 +1,15 @@
+database:
+  type: mysql # ou sqlite, dependendo do seu banco
+  host: localhost
+  port: 3306
+  name: dpermissions_db
+  username: root
+  password: senha_do_banco
+
+economy:
+  transaction_fee: 0.1
+  daily_reward_min: 100
+  daily_reward_max: 1000
+  initial_balance: 1000
+  initial_bank_balance: 0
+  max_balance: 5000

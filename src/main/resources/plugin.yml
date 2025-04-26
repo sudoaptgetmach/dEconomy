@@ -1,0 +1,5 @@
+name: dEconomy
+version: '1.0-SNAPSHOT'
+main: org.destroyer.dEconomy.Main
+api-version: '1.21'
+authors: [ sudoaptgetmach ]

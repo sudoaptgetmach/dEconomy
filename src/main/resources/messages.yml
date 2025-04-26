@@ -1,0 +1,15 @@
+no_permission: "&cVocê não tem permissão para executar esse comando."
+no_permission_console: "&cVocê não tem permissão para executar esse comando no console."
+insufficient_balance: "&cVocê não tem saldo suficiente!"
+invalid_player: "&cVocê precisa informar um jogador válido."
+daily_reward_already_claimed: "&cVocê já coletou sua recompensa diária hoje. Aguarde %hours% horas para resgatar novamente."
+invalid_balance_argument: "&cVocê precisa inserir um tipo válido: cash, bank."
+
+transfer_success: "&aVocê transferiu &famount% &apara &f%player%&a."
+daily_reward_claimed: "&aVocê coletou sua recompensa diária de &f%amount%&a!"
+balance_changed_admin: "&aVocê alterou o saldo do jogador &f%target% &apara &f%money%&a."
+bankbalance_changed_admin: "&aVocê alterou o saldo do banco do jogador &f%target% &apara &f%money%&a."
+
+transaction_history: "&aSeu histórico de transações: \n%history%"
+balance_message: "&aSaldo:\n&aBanco: &f%bankBalance% \n&aCarteira: &f%balance%"
+balance_other_player_message: "&aSaldo de %target%:\n&aBanco: &f%bankBalance% \n&aCarteira: &f%balance%"
