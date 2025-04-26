@@ -1,12 +1,13 @@
 CREATE TABLE Bank (
                       userId BLOB PRIMARY KEY,
-                      balance INTEGER DEFAULT 0 CHECK (balance >= 0) -- Usando INTEGER para valores monetários em SQLite
+                      balance INTEGER DEFAULT 0 CHECK (balance >= 0)
 );
 
 CREATE TABLE DailyRewards (
                               userId BLOB PRIMARY KEY,
                               amount INTEGER,
-                              last_claim_date DATETIME
+                              last_claim_date DATETIME,
+                              FOREIGN KEY (userId) REFERENCES Bank(userId)
 );
 
 CREATE TABLE Player (

@@ -1,7 +1,7 @@
 package org.destroyer.dEconomy;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import org.destroyer.dEconomy.commands.BalanceCommand;
+import org.destroyer.dEconomy.commands.*;
 import org.destroyer.dEconomy.database.DatabaseManager;
 import org.destroyer.dEconomy.enums.Config;
 import org.destroyer.dEconomy.enums.Messages;
@@ -23,8 +23,10 @@ public final class Main extends JavaPlugin {
 
     private BankRepository bankRepository;
     private PlayerRepository playerRepository;
+    private TransactionsRepository transactionsRepository;
 
     private ConfigManager configManager;
+    private ConfigManager messagesManager;
 
     @Override
     public void onEnable() {
@@ -41,6 +43,10 @@ public final class Main extends JavaPlugin {
                 .build();
 
         lamp.register(new BalanceCommand(bankRepository, playerRepository));
+        lamp.register(new BankCommands(bankRepository, playerRepository));
+        lamp.register(new EconomyAdminCommands(configManager, messagesManager));
+        lamp.register(new TransactionsCommand(transactionsRepository));
+        lamp.register(new PayCommand(playerRepository, bankRepository, transactionsRepository));
 
         getPluginManager().registerEvents(new EconomyListener(playerRepository, bankRepository), this);
     }
@@ -56,12 +62,12 @@ public final class Main extends JavaPlugin {
         bankRepository = new BankRepository(databaseManager);
         DailyRewardsRepository dailyRewardsRepository = new DailyRewardsRepository(databaseManager);
         playerRepository = new PlayerRepository(databaseManager);
-        TransactionsRepository transactionsRepository = new TransactionsRepository(databaseManager);
+        transactionsRepository = new TransactionsRepository(databaseManager);
     }
 
     public void initConfigs() {
         configManager = new ConfigManager(this, "config.yml");
-        ConfigManager messagesManager = new ConfigManager(this, "messages.yml");
+        messagesManager = new ConfigManager(this, "messages.yml");
         ConfigManager permissionsManager = new ConfigManager(this, "permissions.yml");
 
         configManager.setup();
@@ -70,7 +76,6 @@ public final class Main extends JavaPlugin {
         Messages.init(messagesManager);
         Config.init(configManager);
 
-        String prefix = messagesManager.getConfig().getString("prefix");
     }
 
     public ConfigManager getConfigManager() { return configManager; }

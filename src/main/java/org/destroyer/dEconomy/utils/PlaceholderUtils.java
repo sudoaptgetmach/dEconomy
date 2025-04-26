@@ -1,8 +1,11 @@
 package org.destroyer.dEconomy.utils;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 
 import java.util.Map;
+import java.util.UUID;
 
 public class PlaceholderUtils {
 
@@ -27,5 +30,15 @@ public class PlaceholderUtils {
 
     public static String format(String message, Map<String, String> placeholders) {
         return ChatColor.translateAlternateColorCodes('&', applyPlaceholder(message, placeholders));
+    }
+
+
+    public static String getPlayerNameFromUUID(UUID uuid) {
+        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+        if (player.hasPlayedBefore()) {
+            return player.getName();
+        } else {
+            return "Jogador inválido";
+        }
     }
 }

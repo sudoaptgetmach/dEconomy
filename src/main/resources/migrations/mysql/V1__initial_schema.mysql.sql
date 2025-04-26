@@ -6,7 +6,8 @@ CREATE TABLE Bank (
 CREATE TABLE DailyRewards (
                               userId BINARY(16) PRIMARY KEY,
                               amount INT,
-                              last_claim_date DATETIME
+                              last_claim_date DATETIME,
+                              FOREIGN KEY (userId) REFERENCES Bank(userId)
 );
 
 CREATE TABLE Player (

@@ -13,11 +13,12 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import java.sql.SQLException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.destroyer.dEconomy.enums.Messages.*;
 
-@Command({ "balance", "bal", "carteira" })
+@Command({"balance", "bal", "carteira"})
 @Usage("balance <playerName>")
 @CommandPermission("deconomy.balance.command")
 public class BalanceCommand {
@@ -30,7 +31,7 @@ public class BalanceCommand {
         this.playerRepository = playerRepository;
     }
 
-    @Command({ "balance", "bal", "carteira" })
+    @Command({"balance", "bal", "carteira"})
     public void balance(BukkitCommandActor sender) throws SQLException {
         if (!sender.isPlayer()) {
             sender.error(NO_PERMISSION_CONSOLE.get());
@@ -49,9 +50,9 @@ public class BalanceCommand {
     @Subcommand("<playerName>")
     @Usage("balance <playerName>")
     public void balanceWithArgs(BukkitCommandActor sender, @Named("playerName") @revxrsal.commands.annotation.Optional String playerName) throws SQLException {
-        OfflinePlayer target = Bukkit.getPlayer(playerName);
+        OfflinePlayer target = Bukkit.getOfflinePlayer(playerName);
 
-        if (target == null) {
+        if (!target.hasPlayedBefore()) {
             sender.error(INVALID_PLAYER.get());
             return;
         }
@@ -70,38 +71,39 @@ public class BalanceCommand {
     @Usage("setbalance <player> <value> <type>")
     @CommandPermission("deconomy.balance.admin")
     public void setBalance(BukkitCommandActor sender, @Named("player") String playerName, @Named("value") Long value, @Default("cash") @Named("type") String type) throws SQLException {
-       if (playerName == null) {
-           sender.error(INVALID_PLAYER.get());
-           return;
-       }
+        if (playerName == null) {
+            sender.error(INVALID_PLAYER.get());
+            return;
+        }
 
-       if (!type.equalsIgnoreCase("bank") && !type.equalsIgnoreCase("cash")) {
-           sender.error(INVALID_BALANCE_ARGUMENT.get());
-           return;
-       }
+        OfflinePlayer target = Bukkit.getOfflinePlayer(playerName);
 
-       OfflinePlayer target = Bukkit.getPlayer(playerName);
+        if (!target.hasPlayedBefore()) {
+            sender.error(INVALID_PLAYER.get());
+            return;
+        }
 
-       if (target == null) {
-           sender.error(INVALID_PLAYER.get());
-           return;
-       }
+        Optional<Player> balance = playerRepository.getPlayer(target.getUniqueId());
+        Optional<Bank> bankAccount = bankRepository.getPlayerBankAccount(target.getUniqueId());
 
-       Optional<Player> balance = playerRepository.getPlayer(target.getUniqueId());
-       Optional<Bank> bank = bankRepository.getPlayerBankAccount(target.getUniqueId());
-
-       if (type.equalsIgnoreCase("bank") && bank.isPresent()) {
-           bankRepository.updateBankAccountBalance(target.getUniqueId(), value);
-           sender.sendRawMessage(BANKBALANCE_CHANGED_ADMIN.get(Map.of("target", target.getName(), "money", String.valueOf(value))));
-           return;
-       }
-
-       if (type.equalsIgnoreCase("cash") && balance.isPresent()) {
-           playerRepository.updatePlayer(target.getUniqueId(), new PlayerDTO(target.getName(), balance.get().title(), value));
-           sender.sendRawMessage(BALANCE_CHANGED_ADMIN.get(Map.of("target", target.getName(), "money", String.valueOf(value))));
-           return;
-       }
-
-       sender.error(INVALID_PLAYER.get());
+        switch (type) {
+            case "cash" -> {
+                if (balance.isPresent()) {
+                    playerRepository.updatePlayer(target.getUniqueId(), new PlayerDTO(target.getName(), balance.get().title(), value));
+                    sender.sendRawMessage(BALANCE_CHANGED_ADMIN.get(Map.of("target", Objects.requireNonNull(target.getName()), "money", String.valueOf(value))));
+                } else {
+                    sender.error(INVALID_PLAYER_ACCOUNT.get(Map.of("target", Objects.requireNonNull(target.getName()))));
+                }
+            }
+            case "bank" -> {
+                if (bankAccount.isPresent()) {
+                    bankRepository.updateBankAccountBalance(target.getUniqueId(), value);
+                    sender.sendRawMessage(BANKBALANCE_CHANGED_ADMIN.get(Map.of("target", Objects.requireNonNull(target.getName()), "money", String.valueOf(value))));
+                } else {
+                    sender.error(INVALID_PLAYER_BANKACCOUNT.get(Map.of("target", Objects.requireNonNull(target.getName()))));
+                }
+            }
+            default -> sender.error(INVALID_BALANCE_ARGUMENT.get());
+        }
     }
 }
