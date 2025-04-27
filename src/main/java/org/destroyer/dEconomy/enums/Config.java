@@ -10,6 +10,7 @@ public enum Config {
 
     INITIAL_BALANCE("economy.initial_balance"),
     INITIAL_BANK_BALANCE("economy.initial_bank_balance"),
+    DAILY_REWARD_COOLDOWN("economy.daily_reward_hours_cooldown"),
     DAILY_REWARD_MIN("economy.daily_reward_min"),
     DAILY_REWARD_MAX("economy.daily_reward_max"),
     MAX_BALANCE("economy.max_balance");

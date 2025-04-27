@@ -8,6 +8,7 @@ database:
 
 economy:
   transaction_fee: 0.1
+  daily_reward_hours_cooldown: 24
   daily_reward_min: 100
   daily_reward_max: 1000
   initial_balance: 1000

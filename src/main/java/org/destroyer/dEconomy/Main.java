@@ -24,6 +24,7 @@ public final class Main extends JavaPlugin {
     private BankRepository bankRepository;
     private PlayerRepository playerRepository;
     private TransactionsRepository transactionsRepository;
+    private DailyRewardsRepository dailyRewardsRepository;
 
     private ConfigManager configManager;
     private ConfigManager messagesManager;
@@ -47,6 +48,7 @@ public final class Main extends JavaPlugin {
         lamp.register(new EconomyAdminCommands(configManager, messagesManager));
         lamp.register(new TransactionsCommand(transactionsRepository));
         lamp.register(new PayCommand(playerRepository, bankRepository, transactionsRepository));
+        lamp.register(new DailyRewardCommand(playerRepository, dailyRewardsRepository));
 
         getPluginManager().registerEvents(new EconomyListener(playerRepository, bankRepository), this);
     }
@@ -60,7 +62,7 @@ public final class Main extends JavaPlugin {
 
     public void initRepository() {
         bankRepository = new BankRepository(databaseManager);
-        DailyRewardsRepository dailyRewardsRepository = new DailyRewardsRepository(databaseManager);
+        dailyRewardsRepository = new DailyRewardsRepository(databaseManager);
         playerRepository = new PlayerRepository(databaseManager);
         transactionsRepository = new TransactionsRepository(databaseManager);
     }

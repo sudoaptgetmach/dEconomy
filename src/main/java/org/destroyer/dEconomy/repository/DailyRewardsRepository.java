@@ -24,7 +24,7 @@ public class DailyRewardsRepository {
     }
 
     public void addDailyRewards(DailyRewards dailyRewards) throws SQLException {
-        String query = "INSERT INTO `Bank` (userId, amount, last_claim_date) VALUES (?, ?, ?)";
+        String query = "INSERT INTO `DailyRewards` (userId, amount, last_claim_date) VALUES (?, ?, ?)";
         try (Connection connection = databaseManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, String.valueOf(dailyRewards.userId()));
@@ -35,7 +35,7 @@ public class DailyRewardsRepository {
     }
 
     public Optional<DailyRewards> getDailyReward(UUID userId) throws SQLException {
-        String query = "SELECT * FROM `Bank` WHERE userId = ?";
+        String query = "SELECT * FROM `DailyRewards` WHERE userId = ?";
         try (Connection connection = databaseManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, String.valueOf(userId));

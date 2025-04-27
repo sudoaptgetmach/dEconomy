@@ -19,8 +19,18 @@ public class EconomyAdminCommands {
         this.messagesManager = messagesManager;
     }
 
+    @Command({ "deconomy", "economyadmin" })
+    @CommandPermission("deconomy.admin")
+    public void help(BukkitCommandActor sender) {
+        sender.sendRawMessage("§6§l=== dEconomy Admin Help ===");
+        sender.sendRawMessage("§eComandos principais:");
+        sender.sendRawMessage("§7/deconomy help §8- §fMostra esta mensagem de ajuda");
+        sender.sendRawMessage("§7/deconomy reload <config/messages> §8- §fRecarrega o respectivo arquivo de configurações");
+    }
+
     @Subcommand("reload <configType>")
     @Usage("reload <configType>")
+    @CommandPermission("deconomy.admin.reload")
     public void reloadConfig(BukkitCommandActor sender, @Named("configType") @Default("config") String config) {
         switch (config.toLowerCase()) {
             case "config" -> {

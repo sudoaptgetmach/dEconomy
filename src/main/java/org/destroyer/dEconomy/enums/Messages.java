@@ -11,6 +11,7 @@ public enum Messages {
     NO_PERMISSION_CONSOLE("no_permission_console"),
     INSUFFICIENT_BALANCE("insufficient_balance"),
     DAILY_REWARD_ALREADY_CLAIMED("daily_reward_already_claimed"),
+    DAILY_REWARD_ERROR("daily_reward_error"),
     INVALID_PLAYER("invalid_player"),
     PLAYER_NOT_FOUND("player_not_found"),
     INVALID_TRANSACTION_VALUE("invalid_transaction_value"),
