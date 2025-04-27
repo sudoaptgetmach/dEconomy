@@ -72,14 +72,14 @@ public class MenuListener implements Listener {
     }
 
     private void openCosmeticsShop(Player player) {
-        // Lógica para abrir a loja de cosméticos
+        // todo
     }
 
     private void openCommandsShop(Player player) {
-        // Lógica para abrir a loja de comandos
+        // todo
     }
 
     private void openBoosterShop(Player player) {
-        // Lógica para abrir a loja de boosters
+        // todo
     }
 }
