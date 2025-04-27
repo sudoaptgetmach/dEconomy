@@ -24,6 +24,7 @@ implementing economic systems.
 - `/pay <player> <amount>`: Transfers money to another player.
 - `/bank deposit <amount>`: Deposits money into the bank account.
 - `/bank withdraw <amount>`: Withdraws money from the bank account.
+- `/shop`: Opens a GUI shop to buy items, cosmetics and more. TODO: editable config, items and GUI
 - `/dailyreward`: Claims the daily reward.
 
 ### Admin Commands
