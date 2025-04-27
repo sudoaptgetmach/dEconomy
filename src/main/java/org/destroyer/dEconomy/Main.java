@@ -7,11 +7,13 @@ import org.destroyer.dEconomy.enums.Config;
 import org.destroyer.dEconomy.enums.Messages;
 import org.destroyer.dEconomy.handler.LampExceptionHandler;
 import org.destroyer.dEconomy.listener.EconomyListener;
+import org.destroyer.dEconomy.listener.MenuListener;
 import org.destroyer.dEconomy.manager.ConfigManager;
 import org.destroyer.dEconomy.repository.BankRepository;
 import org.destroyer.dEconomy.repository.DailyRewardsRepository;
 import org.destroyer.dEconomy.repository.PlayerRepository;
 import org.destroyer.dEconomy.repository.TransactionsRepository;
+import org.destroyer.dEconomy.services.ShopService;
 import revxrsal.commands.bukkit.BukkitLamp;
 
 import static org.bukkit.Bukkit.getPluginManager;
@@ -26,8 +28,14 @@ public final class Main extends JavaPlugin {
     private TransactionsRepository transactionsRepository;
     private DailyRewardsRepository dailyRewardsRepository;
 
+    private ShopService shopService;
+
     private ConfigManager configManager;
     private ConfigManager messagesManager;
+
+    public static Main getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -49,8 +57,10 @@ public final class Main extends JavaPlugin {
         lamp.register(new TransactionsCommand(transactionsRepository));
         lamp.register(new PayCommand(playerRepository, bankRepository, transactionsRepository));
         lamp.register(new DailyRewardCommand(playerRepository, dailyRewardsRepository));
+        lamp.register(new ShopCommand());
 
         getPluginManager().registerEvents(new EconomyListener(playerRepository, bankRepository), this);
+        getPluginManager().registerEvents(new MenuListener(shopService), this);
     }
 
     @Override
@@ -65,6 +75,8 @@ public final class Main extends JavaPlugin {
         dailyRewardsRepository = new DailyRewardsRepository(databaseManager);
         playerRepository = new PlayerRepository(databaseManager);
         transactionsRepository = new TransactionsRepository(databaseManager);
+
+        shopService = new ShopService(playerRepository);
     }
 
     public void initConfigs() {
@@ -77,10 +89,9 @@ public final class Main extends JavaPlugin {
         permissionsManager.setup();
         Messages.init(messagesManager);
         Config.init(configManager);
-
     }
 
-    public ConfigManager getConfigManager() { return configManager; }
-    public DatabaseManager getDatabaseManager() { return databaseManager; }
-    public static Main getInstance() { return instance; }
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
 }

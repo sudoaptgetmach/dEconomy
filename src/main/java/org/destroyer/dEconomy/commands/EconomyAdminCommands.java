@@ -7,7 +7,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 
 import static org.destroyer.dEconomy.enums.Messages.*;
 
-@Command({ "deconomy", "economyadmin" })
+@Command({"deconomy", "economyadmin"})
 @CommandPermission("deconomy.admin")
 public class EconomyAdminCommands {
 
@@ -19,7 +19,7 @@ public class EconomyAdminCommands {
         this.messagesManager = messagesManager;
     }
 
-    @Command({ "deconomy", "economyadmin" })
+    @Command({"deconomy", "economyadmin"})
     @CommandPermission("deconomy.admin")
     public void help(BukkitCommandActor sender) {
         sender.sendRawMessage("§6§l=== dEconomy Admin Help ===");

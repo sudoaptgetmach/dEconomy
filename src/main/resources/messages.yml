@@ -15,6 +15,7 @@ transfer_received: "&aVocê recebeu %amount% do jogador %player%."
 withdraw_success: "&aVocê sacou &f%amount% &ade sua conta bancária."
 deposit_success: "&aVocê transferiu &f%amount% &apara sua conta bancária."
 daily_reward_claimed: "&aVocê coletou sua recompensa diária de &f%amount%&a!"
+purchase_success: "&aVocê comprou o item %item% &apor %amount%."
 balance_changed_admin: "&aVocê alterou o saldo do jogador &f%target% &apara &f%money%&a."
 bankbalance_changed_admin: "&aVocê alterou o saldo do banco do jogador &f%target% &apara &f%money%&a."
 

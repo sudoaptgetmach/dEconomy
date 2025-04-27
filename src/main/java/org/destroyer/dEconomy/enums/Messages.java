@@ -27,6 +27,7 @@ public enum Messages {
     WITHDRAW_SUCCESS("withdraw_success"),
     DEPOSIT_SUCCESS("deposit_success"),
     DAILY_REWARD_CLAIMED("daily_reward_claimed"),
+    PURCHASE_SUCCESS("purchase_success"),
     BALANCE_CHANGED_ADMIN("balance_changed_admin"),
     BANKBALANCE_CHANGED_ADMIN("bankbalance_changed_admin"),
 
@@ -38,8 +39,8 @@ public enum Messages {
     BALANCE_MESSAGE("balance_message"),
     BALANCE_OTHERPLAYER_MESSAGE("balance_other_player_message");
 
-    private final String path;
     private static ConfigManager configManager;
+    private final String path;
 
     Messages(String path) {
         this.path = path;

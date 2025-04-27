@@ -18,7 +18,7 @@ import java.util.Optional;
 
 import static org.destroyer.dEconomy.enums.Messages.*;
 
-@Command({ "banco", "bank" })
+@Command({"banco", "bank"})
 @CommandPermission("deconomy.bank.command")
 public class BankCommands {
 
@@ -30,17 +30,29 @@ public class BankCommands {
         this.playerRepository = playerRepository;
     }
 
-    @Subcommand({ "withdraw" })
+    @Subcommand({"withdraw"})
     @Usage("withdraw <money>")
     public void bankWithdraw(BukkitCommandActor sender, @Named("money") Long money) throws SQLException {
-        if (!sender.isPlayer()) { sender.error(NO_PERMISSION_CONSOLE.get()); return; }
-        if (money == 0) { sender.error(INVALID_TRANSACTION_VALUE.get()); return; }
+        if (!sender.isPlayer()) {
+            sender.error(NO_PERMISSION_CONSOLE.get());
+            return;
+        }
+        if (money == 0) {
+            sender.error(INVALID_TRANSACTION_VALUE.get());
+            return;
+        }
 
         Optional<Player> balance = playerRepository.getPlayer(sender.uniqueId());
         Optional<Bank> bank = bankRepository.getPlayerBankAccount(sender.uniqueId());
 
-        if (balance.isEmpty()) { sender.error(INVALID_PLAYER_ACCOUNT.get()); return; }
-        if (bank.isEmpty()) { sender.error(INVALID_PLAYER_BANKACCOUNT.get()); return; }
+        if (balance.isEmpty()) {
+            sender.error(INVALID_PLAYER_ACCOUNT.get());
+            return;
+        }
+        if (bank.isEmpty()) {
+            sender.error(INVALID_PLAYER_BANKACCOUNT.get());
+            return;
+        }
 
         if (bank.get().balance() >= money) {
             Long newBankBalance = bank.get().balance() - money;
@@ -54,17 +66,29 @@ public class BankCommands {
         }
     }
 
-    @Subcommand({ "deposit" })
+    @Subcommand({"deposit"})
     @Usage("deposit <money>")
     public void bankDeposit(BukkitCommandActor sender, @Named("money") Long money) throws SQLException {
-        if (!sender.isPlayer()) { sender.error(NO_PERMISSION_CONSOLE.get()); return; }
-        if (money == 0) { sender.error(INVALID_TRANSACTION_VALUE.get()); return; }
+        if (!sender.isPlayer()) {
+            sender.error(NO_PERMISSION_CONSOLE.get());
+            return;
+        }
+        if (money == 0) {
+            sender.error(INVALID_TRANSACTION_VALUE.get());
+            return;
+        }
 
         Optional<Player> balance = playerRepository.getPlayer(sender.uniqueId());
         Optional<Bank> bank = bankRepository.getPlayerBankAccount(sender.uniqueId());
 
-        if (balance.isEmpty()) { sender.error(INVALID_PLAYER_ACCOUNT.get()); return; }
-        if (bank.isEmpty()) { sender.error(INVALID_PLAYER_BANKACCOUNT.get()); return; }
+        if (balance.isEmpty()) {
+            sender.error(INVALID_PLAYER_ACCOUNT.get());
+            return;
+        }
+        if (bank.isEmpty()) {
+            sender.error(INVALID_PLAYER_BANKACCOUNT.get());
+            return;
+        }
 
         if (balance.get().onHandBalance() >= money) {
             Long newOnHandBalance = balance.get().onHandBalance() - money;
@@ -78,7 +102,7 @@ public class BankCommands {
         }
     }
 
-    @Command({ "banco", "bank" })
+    @Command({"banco", "bank"})
     public void help(BukkitCommandActor sender) {
         sender.sendRawMessage("§6§l=== dBank Help ===");
         sender.sendRawMessage("§eComandos principais:");

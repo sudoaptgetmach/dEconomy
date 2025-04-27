@@ -27,11 +27,17 @@ public class TransactionsCommand {
         this.transactionsRepository = transactionsRepository;
     }
 
-    @Command({ "transacoes", "transactions" })
+    @Command({"transacoes", "transactions"})
     @CommandPermission("deconomy.transactions")
     public void transactions(BukkitCommandActor sender, @Optional @Named("name") String playerName) throws SQLException {
-        if (!sender.isPlayer() && playerName == null) { sender.error(NO_PERMISSION_CONSOLE.get()); return; }
-        if (playerName != null && !sender.isConsole() && !sender.asPlayer().hasPermission("deconomy.transactions.seeOther")) { sender.error(NO_PERMISSION.get()); return; }
+        if (!sender.isPlayer() && playerName == null) {
+            sender.error(NO_PERMISSION_CONSOLE.get());
+            return;
+        }
+        if (playerName != null && !sender.isConsole() && !sender.asPlayer().hasPermission("deconomy.transactions.seeOther")) {
+            sender.error(NO_PERMISSION.get());
+            return;
+        }
 
         if (playerName != null) {
             OfflinePlayer target = Bukkit.getOfflinePlayer(playerName);
@@ -44,14 +50,20 @@ public class TransactionsCommand {
         }
 
         List<Transactions> transactions = transactionsRepository.getTransactions(sender.uniqueId());
-        if (transactions.isEmpty()) { sender.error(NO_TRANSACTIONS.get(Map.of("player", sender.asPlayer().getName()))); return; }
+        if (transactions.isEmpty()) {
+            sender.error(NO_TRANSACTIONS.get(Map.of("player", sender.asPlayer().getName())));
+            return;
+        }
 
         sendTransactionHistory(sender, transactions);
     }
 
     public void transactionsWithArgs(BukkitCommandActor sender, OfflinePlayer target) throws SQLException {
         List<Transactions> transactions = transactionsRepository.getTransactions(target.getUniqueId());
-        if (transactions.isEmpty()) { sender.error(NO_TRANSACTIONS.get(Map.of("player", Objects.requireNonNull(target.getName())))); return; }
+        if (transactions.isEmpty()) {
+            sender.error(NO_TRANSACTIONS.get(Map.of("player", Objects.requireNonNull(target.getName()))));
+            return;
+        }
 
         sendTransactionHistory(sender, transactions);
     }

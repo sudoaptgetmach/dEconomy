@@ -15,8 +15,8 @@ public enum Config {
     DAILY_REWARD_MAX("economy.daily_reward_max"),
     MAX_BALANCE("economy.max_balance");
 
-    private final String path;
     private static ConfigManager configManager;
+    private final String path;
 
     Config(String path) {
         this.path = path;

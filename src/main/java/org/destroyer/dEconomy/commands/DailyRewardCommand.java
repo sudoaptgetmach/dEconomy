@@ -29,7 +29,7 @@ public class DailyRewardCommand {
         this.dailyRewardsRepository = dailyRewardsRepository;
     }
 
-    @Command({ "dailyreward", "recompensadiaria" })
+    @Command({"dailyreward", "recompensadiaria"})
     @CommandPermission("deconomy.dailyreward.command")
     public void dailyReward(BukkitCommandActor actor) throws SQLException {
         if (!actor.isPlayer()) {

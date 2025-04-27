@@ -14,8 +14,8 @@ import java.util.Objects;
  */
 public class DatabaseManager {
 
-    private HikariDataSource dataSource;
     private final FileConfiguration config;
+    private HikariDataSource dataSource;
 
     public DatabaseManager() {
         config = Main.getInstance().getConfigManager().getConfig();

@@ -37,17 +37,26 @@ public class PayCommand {
         this.transactionsRepository = transactionsRepository;
     }
 
-    @Command({ "pay", "pagar" })
+    @Command({"pay", "pagar"})
     @Usage("pay <name> <quantity>")
     @CommandPermission("deconomy.balance.command")
     public void pay(BukkitCommandActor actor, @Named("name") String playerName, @Named("quantity") Long quantity, @Named("type") @Default("cash") String type) throws SQLException {
-        if (!actor.isPlayer()) { actor.error(NO_PERMISSION_CONSOLE.get()); return; }
-        if (quantity.equals(0L)) { actor.error(INVALID_TRANSACTION_VALUE.get()); return; }
+        if (!actor.isPlayer()) {
+            actor.error(NO_PERMISSION_CONSOLE.get());
+            return;
+        }
+        if (quantity.equals(0L)) {
+            actor.error(INVALID_TRANSACTION_VALUE.get());
+            return;
+        }
 
         Player payer = actor.asPlayer();
         OfflinePlayer receiver = Bukkit.getOfflinePlayer(playerName);
 
-        if (payer.getName().equalsIgnoreCase(playerName) || !receiver.hasPlayedBefore()) { actor.error(INVALID_PLAYER.get()); return; }
+        if (payer.getName().equalsIgnoreCase(playerName) || !receiver.hasPlayedBefore()) {
+            actor.error(INVALID_PLAYER.get());
+            return;
+        }
 
         Optional<org.destroyer.dEconomy.models.Player> payerBalance = playerRepository.getPlayer(payer.getUniqueId());
         Optional<Bank> payerBankAccount = bankRepository.getPlayerBankAccount(payer.getUniqueId());
